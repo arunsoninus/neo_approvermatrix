@@ -190,6 +190,7 @@ sap.ui.define([
 		 */
 		_fnApproverMatrixFilter: function (component) {
 			component.AppModel.setProperty("/showAssignNewButton", true);
+			component.AppModel.setProperty("/showToolbarButtons", true);
 			component.AppModel.setProperty("/viewAccessOnly", true);
 			var staffInfo = component.AppModel.getProperty("/staffInfo");
 			var andFilter = [],
@@ -239,6 +240,7 @@ sap.ui.define([
 				component.AppModel.setProperty("/showAssignNewButton", false);
 			} else { //Not Assigned to Anything
 				component.AppModel.setProperty("/showAssignNewButton", false);
+				component.AppModel.setProperty("/showToolbarButtons", false);
 				component.AppModel.setProperty("/viewAccessOnly", false);
 			}
 

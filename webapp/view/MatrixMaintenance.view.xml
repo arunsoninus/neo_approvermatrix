@@ -11,14 +11,14 @@
 						<headerToolbar>
 							<OverflowToolbar>
 								<Button icon="sap-icon://refresh" text="Refresh" tooltip="Refresh" press="onPressRefreshApproverMatrix" type="Transparent"
-									visible="{AppModel>/showAssignNewButton}"/>
+									visible="{AppModel>/showToolbarButtons}"/>
 								<ToolbarSpacer/>
 								<Button icon="sap-icon://activity-assigned-to-goal" press="onPressAssignNew" text="{i18n>ApproverMatrix.Button.AssignNew}"
 									type="Transparent" visible="{AppModel>/showAssignNewButton}"/>
-								<Button icon="sap-icon://sort" press="onPressSortRequest($event, 'sort')" type="Transparent" visible="{AppModel>/showAssignNewButton}"/>
-								<Button tooltip="Group" icon="sap-icon://group-2" press="onPressGroupRequest($event, 'group')" visible="{AppModel>/showAssignNewButton}"/>
+								<Button icon="sap-icon://sort" press="onPressSortRequest($event, 'sort')" type="Transparent" visible="{AppModel>/showToolbarButtons}"/>
+								<Button tooltip="Group" icon="sap-icon://group-2" press="onPressGroupRequest($event, 'group')" visible="{AppModel>/showToolbarButtons}"/>
 								<Button icon="sap-icon://download" tooltip="{i18n>ApproverMatrix.Button.Export}" press="onPressExport"
-									visible="{AppModel>/showAssignNewButton}"/>
+									visible="{AppModel>/showToolbarButtons}"/>
 							</OverflowToolbar>
 						</headerToolbar>
 						<columns>
