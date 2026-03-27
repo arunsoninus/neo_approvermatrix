@@ -1,0 +1,90 @@
+<mvc:View class="sapUiSizeCompact" controllerName="nus.edu.sg.approvermatrix.controller.MatrixMaintenance" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns="sap.m" xmlns:tnt="sap.tnt" xmlns:core="sap.ui.core">
+	<App id="app">
+		<pages>
+			<Page id="approverMatrixPage" class="sapUiSizeCompact sapUiNoMargin">
+				<content>
+					<core:Fragment fragmentName="nus.edu.sg.approvermatrix.view.fragments.Filter" type="XML"/>
+					<Table class="sapUiSizeCompact" id="idApproverMatrixTable" inset="false" growing="true" growingThreshold="100"
+						sticky="ColumnHeaders,HeaderToolbar"
+						items="{ path: 'MatrixModel>/EclaimsApprovalMatrixViews', sorter: { path: 'UPDATED_ON', descending: true},templateShareable:true}">
+						<headerToolbar>
+							<OverflowToolbar>
+								<Button icon="sap-icon://refresh" text="Refresh" tooltip="Refresh" press="onPressRefreshApproverMatrix" type="Transparent"
+									visible="{AppModel>/showAssignNewButton}"/>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://activity-assigned-to-goal" press="onPressAssignNew" text="{i18n>ApproverMatrix.Button.AssignNew}"
+									type="Transparent" visible="{AppModel>/showAssignNewButton}"/>
+								<Button icon="sap-icon://sort" press="onPressSortRequest($event, 'sort')" type="Transparent" visible="{AppModel>/showAssignNewButton}"/>
+								<Button tooltip="Group" icon="sap-icon://group-2" press="onPressGroupRequest($event, 'group')" visible="{AppModel>/showAssignNewButton}"/>
+								<Button icon="sap-icon://download" tooltip="{i18n>ApproverMatrix.Button.Export}" press="onPressExport"
+									visible="{AppModel>/showAssignNewButton}"/>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column width="10rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column1}"/>
+							</Column>
+							<Column width="18rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column2}"/>
+							</Column>
+							<Column width="10rem" hAlign="Left" minScreenWidth="Tablet">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column3}"/>
+							</Column>
+							<Column width="8rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column4}"/>
+							</Column>
+							<Column hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column5}" wrapping="true"/>
+							</Column>
+							<Column hAlign="Left" minScreenWidth="Tablet">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column6}"/>
+							</Column>
+							<Column width="10rem" hAlign="Left" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column7}"/>
+							</Column>
+							<Column hAlign="Left"
+								visible="{= ${AppModel>/iconTabBarSelectedKey} === 'Draft' ? false : ${AppModel>/showAssignNewButton} === true ? true : false }"
+								minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline">
+								<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column8}"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Inactive">
+								<cells>
+									<!--<ObjectIdentifier title="{= ${MatrixModel>STATUS_CODE} === '01' ? 'Draft' : ${MatrixModel>REQUEST_ID} }"/>-->
+									<ObjectIdentifier title="{MatrixModel>PROCESS_TITLE}"/>
+									<!--	<Text text="({MatrixModel>CLAIM_TYPE})"/>-->
+									<VBox>
+										<Text text="{MatrixModel>ULU_T} ({MatrixModel>ULU})/"/>
+										<Text text="{MatrixModel>FDLU_T} ({MatrixModel>FDLU})"/>
+									</VBox>
+									<VBox>
+										<Text text="{MatrixModel>FULL_NM}"/>
+										<Text text="{MatrixModel>STAFF_ID} ({MatrixModel>STAFF_NUSNET_ID})"/>
+									</VBox>
+									<Text text="{MatrixModel>STAFF_USER_ALIAS}"/>
+									<Text text="{ path: 'MatrixModel>VALID_FROM', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>
+									<Text text="{ path: 'MatrixModel>VALID_TO', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>
+									<VBox>
+										<Text text="{ path: 'MatrixModel>UPDATED_ON', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'd MMM, yyyy HH:mm:ss' } }"/>
+										<Text text="{ path: 'MatrixModel>UPDATED_BY_NID'}"/>
+									</VBox>
+									<MenuButton >
+										<menu>
+											<Menu >
+												<MenuItem text="Delimit" icon="sap-icon://eraser" enabled="true" press="onPressDelimitConfig"
+													visible="{ parts: [ {path:'MatrixModel>VALID_FROM'}, {path:'MatrixModel>VALID_TO'},{path:'AppModel>/showAssignNewButton'} ], formatter: '.formatter.checkValidityForDelemition' }"/>
+												<MenuItem text="Delete" icon="sap-icon://delete" enabled="true" press="onPressDeleteConfig"/>
+											</Menu>
+										</menu>
+									</MenuButton>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

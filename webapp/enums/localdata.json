@@ -1,0 +1,62 @@
+{
+
+	"uibinding": {
+		"isStaffEnabled": false
+	},
+	"userTypeList": [{
+		"typeCode": "ALL",
+		"typeDesc": "All"
+	}, {
+		"typeCode": "A",
+		"typeDesc": "Active"
+	}, {
+		"typeCode": "I",
+		"typeDesc": "Inactive"
+	}],
+	"processCodeList": [{
+		"PROCESS_CODE": "",
+		"PROCESS_DESC": ""
+	}, {
+		"PROCESS_CODE": "101",
+		"PROCESS_DESC": "Part-Time Teaching"
+	}, {
+		"PROCESS_CODE": "103",
+		"PROCESS_DESC": "Overtime (EA)"
+	}, {
+		"PROCESS_CODE": "104",
+		"PROCESS_DESC": "Overtime(Non-EA)"
+	}],
+	"newDesignationList": [{
+		"DESIGNATION_CODE": "",
+		"DESIGNATION_DESC": ""
+	}, {
+		"DESIGNATION_CODE": "CLAIM_ASSISTANT",
+		"DESIGNATION_DESC": "Claim Assistant"
+	}, {
+		"DESIGNATION_CODE": "VERIFIER",
+		"DESIGNATION_DESC": "Verifier"
+	}, {
+		"DESIGNATION_CODE": "APPROVER",
+		"DESIGNATION_DESC": "Approver"
+	}],
+	"deptAdminElement": {
+		"DESIGNATION_CODE": "DEPARTMENT_ADMIN",
+		"DESIGNATION_DESC": "Department Admin"
+	},
+	"currentDesignationList": [{
+		"DESIGNATION_CODE": "",
+		"DESIGNATION_DESC": ""
+	}, {
+		"DESIGNATION_CODE": "NUS_CHRS_ECLAIMS_DEPT_ADMIN",
+		"DESIGNATION_DESC": "Department Admin"
+	}, {
+		"DESIGNATION_CODE": "NUS_CHRS_ECLAIMS_CA",
+		"DESIGNATION_DESC": "Claim Assistant"
+	}, {
+		"DESIGNATION_CODE": "NUS_CHRS_ECLAIMS_VERIFIER",
+		"DESIGNATION_DESC": "Verifier"
+	}, {
+		"DESIGNATION_CODE": "NUS_CHRS_ECLAIMS_APPROVER",
+		"DESIGNATION_DESC": "Approver"
+	}]
+}

@@ -1,0 +1,47 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<HBox>
+		<VBox width="6%" class="loggedInUserPhotoStyle sapUiContentPadding">
+			<Avatar displaySize="S" displayShape="Circle" press="onPressLoggedInUserPhoto" src="{AppModel>/staffPhoto}" badgeIcon="sap-icon://display"
+				badgeTooltip="Julie Armstrong"/>
+		</VBox>
+		<VBox width="94%">
+			<fb:FilterBar showFilterConfiguration="false" useToolbar="false" id="planningFilterBar" clear="onClear" search="onSearchAssignmentRequest"
+				showClearOnFB="{AppModel>/viewAccessOnly}" class="sapUiNoMargin sapUiNoContentPadding" showGoOnFB="{AppModel>/viewAccessOnly}">
+				<fb:filterGroupItems>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="AsOfDate" label="As Of Date" labelTooltip=""
+						visibleInFilterBar="{AppModel>/viewAccessOnly}" visible="true">
+						<fb:control>
+							<DatePicker placeholder="MMM DD, YYYY" value="{path: 'AppModel>/asOfDate', type: 'sap.ui.model.type.Date'}"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="EndDate" label="Search Assignment" labelTooltip=""
+						visibleInFilterBar="{AppModel>/viewAccessOnly}" visible="true">
+						<fb:control>
+							<Input placeholder="{i18n>ApproverMatrix.Search.Ph}" width="20%" value="{AppModel>/searchAttr}"/>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="searchDesignation" label="Search by Role" labelTooltip=""
+						visibleInFilterBar="{AppModel>/viewAccessOnly}" visible="true">
+						<fb:control>
+							<ComboBox selectedKey="{AppModel>/searchGroup}" items="{ path: 'AppModel>/designationList' }"
+								placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.DesignationPh}">
+								<core:Item key="{AppModel>DESIGNATION_CODE}" text="{AppModel>DESIGNATION_DESC}"/>
+							</ComboBox>
+						</fb:control>
+					</fb:FilterGroupItem>
+					<fb:FilterGroupItem groupName="__$INTERNAL$" name="activeInactiveUser" label="Employee Status" labelTooltip=""
+						visibleInFilterBar="{AppModel>/viewAccessOnly}" visible="true">
+						<fb:control>
+							<ComboBox selectedKey="{AppModel>/searchUserType}" items="{ path: 'LocalModel>/userTypeList' }"
+								placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.ActiveOrInactive}">
+								<core:Item key="{LocalModel>typeCode}" text="{LocalModel>typeDesc}"/>
+							</ComboBox>
+							<!--	<Switch state="true" customTextOn="Active" customTextOff="Inactive" change="onSwitchUserMaint"/>-->
+						</fb:control>
+					</fb:FilterGroupItem>
+				</fb:filterGroupItems>
+			</fb:FilterBar>
+		</VBox>
+	</HBox>
+</core:FragmentDefinition>

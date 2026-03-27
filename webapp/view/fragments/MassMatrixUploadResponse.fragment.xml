@@ -1,0 +1,74 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" height="100%" xmlns:u="sap.ui.unified">
+	<Dialog showHeader="false">
+		<customHeader>
+			<Bar>
+				<contentLeft>
+					<Title text="Mass Upload Response"/>
+				</contentLeft>
+				<contentRight>
+					<Button text="Export" icon="sap-icon://excel-attachment" press="onExportMassUploadResponse"/>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<MessageStrip text="Please note : Records without error icon will be only submitted." type="Information" showIcon="true"
+			class="sapUiTinyMarginBeginEnd"></MessageStrip>
+		<content>
+			<!--<ScrollContainer height="auto" width="100%" vertical="true" horizontal="true" focusable="false">-->
+			<Table inset="false" growing="true" growingThreshold="50" sticky="ColumnHeaders,HeaderToolbar"
+				items="{ path: 'AppModel>/excelResponse/matrix_payload', templateShareable:true}">
+				<columns>
+					<Column width="5rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Errors}"/>
+					</Column>
+					<Column width="5rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column1}"/>
+					</Column>
+					<Column width="8rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column2}"/>
+					</Column>
+					<Column width="8rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column3}"/>
+					</Column>
+					<Column width="8rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column4}"/>
+					</Column>
+					<Column width="7rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column5}" wrapping="true"/>
+					</Column>
+					<Column width="8rem">
+						<Label design="Bold" text="{i18n>ApproverMatrix.Table.Column6}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem >
+						<cells>
+							<Button class="removeBorderButton sapUiNoContentPadding" icon="sap-icon://alert" text="{= ${AppModel>validationResults/}.length }"
+								visible="{= ${AppModel>validationResults/}.length > 0 }" type="Reject" press="onMessagePopoverPress"/>
+							<Text text="{AppModel>PROCESS_TITLE}"/>
+							<VBox>
+								<Text text="{AppModel>ULU_T} ({AppModel>ULU})/"/>
+								<Text text="{AppModel>FDLU_T} ({AppModel>FDLU})"/>
+							</VBox>
+							<VBox>
+								<Text text="{AppModel>FULL_NM}"/>
+								<Text text="{AppModel>STAFF_ID} ({AppModel>STAFF_NUSNET_ID})"/>
+							</VBox>
+							<Text text="{AppModel>STAFF_USER_ALIAS}"/>
+							<!--<Text text="{ path: 'AppModel>VALID_FROM', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'd MMM, yyyy' } }"/>
+								<Text text="{ path: 'AppModel>VALID_TO', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'd MMM, yyyy' } }"/>-->
+							<!--<Text text="{ path: 'AppModel>VALID_FROM', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>
+								<Text text="{ path: 'AppModel>VALID_TO', type: 'sap.ui.model.type.DateTime', formatOptions: { pattern: 'dd.MM.yyyy' } }"/>-->
+							<Text text="{AppModel>VALID_FROM_DISPLAY}"/>
+							<Text text="{AppModel>VALID_TO_DISPLAY}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--</ScrollContainer>-->
+		</content>
+		<buttons>
+			<Button icon="sap-icon://action" text="Submit" press="onSubmitMassUploadAfterValidation"></Button>
+			<Button icon="sap-icon://decline" text="Cancel" press="onCancelMassUploadAfterValidation"></Button>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

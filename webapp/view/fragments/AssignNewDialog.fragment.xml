@@ -1,0 +1,106 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:layout="sap.ui.layout"
+	xmlns:suite="sap.suite.ui.commons" xmlns:u="sap.ui.unified" xmlns:calendar="sap.ui.unified.calendar">
+	<Dialog class="sapUiSizeCompact" afterClose="closeAssignmentDialog" showHeader="false">
+		<layout:VerticalLayout>
+			<layout:content>
+				<f:SimpleForm editable="true" layout="ResponsiveGridLayout" maxContainerCols="2" title="" backgroundDesign="Solid" adjustLabelSpan="true"
+					singleContainerFullSize="false" labelSpanL="4" columnsL="3">
+					<f:content>
+						<core:Title
+							text="{=${AssignmentRequest>/isDelimitScenario} === true || ${AppModel>/oMode}==='Edit' ? ${i18n>ApproverMatrix.AssignEdit.Dialog.Title}: ${i18n>ApproverMatrix.AssignNew.Dialog.Title}}"
+							class="sapUiNoMargin"/>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.ProcessCode}" required="true"/>
+						<ComboBox placeholder="Select Process Code" selectedKey="{AssignmentRequest>/PROCESS_CODE}"
+							items="{ path: 'AssignmentRequest>/processCodeList' }" change="onSelectProcessCode" editable="{AssignmentRequest>/isFormEditable}">
+							<core:Item key="{AssignmentRequest>PROCESS_CODE}" text="{AssignmentRequest>PROCESS_TITLE}"/>
+						</ComboBox>
+						<!-- Adding Feature for Mass Upload for OFN and OHR Admin -->
+						<HBox visible="{AppModel>/isSelectionAllowed}">
+							<RadioButton text="Mass Upload" selected="{AssignmentRequest>/isMassUploadSelected}" visible="{AppModel>/isSelectionAllowed}"
+								select="onSelectRequestOption" editable="{AssignmentRequest>/isFormEditable}"/>
+							<Text width="0.5em" visible="{AppModel>/isSelectionAllowed}"/>
+							<RadioButton text="Single Staff" selected="{AssignmentRequest>/isSingleSubmissionSelected}" visible="{AppModel>/isSelectionAllowed}"
+								select="onSelectRequestOption" editable="{AssignmentRequest>/isFormEditable}"/>
+						</HBox>
+						<Label text="Header Rows Count" visible="{AssignmentRequest>/isMassUploadSelected}"/>
+						<Input type="Number" placeholder="No. of Header Rows" tooltip="Enter no. of rows used as header in excel.."
+							value="{AssignmentRequest>/noOfHeaderRows}" visible="{AssignmentRequest>/isMassUploadSelected}" width="15em"/>
+						<Label/>
+						<HBox>
+							<u:FileUploader id="adminMassUploadId" placeholder="Upload Matrix Template.." uploadUrl="" fileType="xls,xlsx" maximumFileSize="1"
+								value="{AssignmentRequest>/matrixFile}" visible="{AssignmentRequest>/isMassUploadSelected}"/>
+						</HBox>
+						<!-- Adding Feature for Mass Upload for OFN and OHR Admin -->
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.Designation}" required="true" visible="{AssignmentRequest>/isDesignationVisible}"/>
+						<ComboBox selectedKey="{AssignmentRequest>/STAFF_USER_GRP}" items="{ path: 'AppModel>/selectedRolesList' }"
+							change="onSelectRole" placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.DesignationPh}"
+							visible="{AssignmentRequest>/isDesignationVisible}" editable="{AssignmentRequest>/isFormEditable}">
+							<core:Item key="{AppModel>DESIGNATION_CODE}" text="{AppModel>DESIGNATION_DESC}"/>
+						</ComboBox>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.ULU}" required="true" visible="{AssignmentRequest>/isULUVisible}"/>
+						<VBox>
+							<CheckBox text="All ULU" selected="{AssignmentRequest>/ALL_ULU}" select="onCheckULU" visible="{AssignmentRequest>/isAllUluVisible}"
+								editable="{AssignmentRequest>/isULUEditable}"/>
+							<MatrixMultiInput placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.ULUPh}" dataPath="/d/results"
+								urlAttr="/ChrsFdluUlus?$select=ULU_C,ULU_T" dialogCodeLbl="ULU_T" dialogDescLbl="ULU_C"
+								dialogTitle="{i18n>ApproverMatrix.AssignNew.Dialog.ULU.Title}" showValueHelp="true" setOnUI="ULU_T" valueHelpOnly="true"
+								valueHelpRequest="lookupValueHelp" value="{AssignmentRequest>/ULU_T}" valueState="{AssignmentRequest>/uluTypeVState}" duplicates="merge"
+								visible="{AssignmentRequest>/isULUVisible}" editable="{AssignmentRequest>/isULUEnabled}"/>
+						</VBox>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.FDLU}" required="true" visible="{AssignmentRequest>/isFDLUVisible}"/>
+						<VBox>
+							<!--	<CheckBox text="All FDLU" selected="{AssignmentRequest>/ALL_FDLU}" select="onCheckFDLU" visible="{AssignmentRequest>/isAllFdluVisible}"
+								enabled="{AssignmentRequest>/isFormEditable}"/>
+							<MatrixMultiInput placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.FDLUPh}" dataPath="/d/results"
+								urlAttr="/ChrsFdluUlus?$select=FDLU_C,FDLU_T" dialogCodeLbl="FDLU_T" dialogDescLbl="FDLU_C"
+								dialogTitle="{i18n>ApproverMatrix.AssignNew.Dialog.FDLU.Title}" showValueHelp="true" setOnUI="FDLU_T" valueHelpOnly="true"
+								valueHelpRequest="lookupValueHelp" value="{AssignmentRequest>/FDLU_T}" valueState="{AssignmentRequest>/fluTypeVState}"
+								enabled="{=!${AssignmentRequest>/ALL_FDLU}}" visible="{AssignmentRequest>/isFDLUVisible}"/>-->
+							<CheckBox text="All FDLU" selected="{AssignmentRequest>/ALL_FDLU}" select="onCheckFDLU" visible="{AssignmentRequest>/isAllFdluVisible}"
+								editable="{AssignmentRequest>/isFDLUEditable}"/>
+							<MatrixMultiInput placeholder="{i18n>ApproverMatrix.AssignNew.Dialog.FDLUPh}" dataPath="/d/results"
+								urlAttr="/ChrsFdluUlus?$select=FDLU_C,FDLU_T" dialogCodeLbl="FDLU_T" dialogDescLbl="FDLU_C"
+								dialogTitle="{i18n>ApproverMatrix.AssignNew.Dialog.FDLU.Title}" showValueHelp="true" setOnUI="FDLU_T" valueHelpOnly="true"
+								valueHelpRequest="lookupValueHelp" value="{AssignmentRequest>/FDLU_T}" valueState="{AssignmentRequest>/fluTypeVState}"
+								editable="{AssignmentRequest>/isFDLUEnabled}" visible="{AssignmentRequest>/isFDLUVisible}"/>
+						</VBox>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.StaffFlag}"
+							visible="{=${AppModel>/oMode}==='Edit' ? false : ${AssignmentRequest>/isStaffSelectionVisible}}"/>
+						<Switch state="{AssignmentRequest>/isExternalStaff}" customTextOn="Yes" customTextOff="No"
+							visible="{=${AppModel>/oMode}==='Edit' ? false : ${AssignmentRequest>/isStaffSelectionVisible}}">
+							<layoutData>
+								<FlexItemData growFactor="1"/>
+							</layoutData>
+						</Switch>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.Staff}" required="true" visible="{AssignmentRequest>/isStaffSelectionVisible}"/>
+						<MatrixMultiInput placeholder="Select Staff.." dataPath="/d/results" urlAttr="/ChrsJobInfos?$select=NUSNET_ID,FULL_NM,STF_NUMBER"
+							dialogCodeLbl="FULL_NM" amendCode="NUSNET_ID" dialogDescLbl="STF_NUMBER" dialogTitle="Select Staff.." showValueHelp="true" setOnUI="FULL_NM"
+							valueHelpOnly="true" valueHelpRequest="lookupValueHelp" value="{AssignmentRequest>/FULL_NM}"
+							valueState="{AssignmentRequest>/staffTypeVState}" editable="{AssignmentRequest>/isStaffEnabled}" loadOnSearch="NUSNET_ID,FULL_NM,STF_NUMBER"
+							visible="{AssignmentRequest>/isStaffSelectionVisible}"/>
+						<Label text="{i18n>ApproverMatrix.AssignNew.Dialog.Validity}" required="true" visible="{AssignmentRequest>/isValidityVisible}"/>
+						<HBox visible="{AssignmentRequest>/isValidityVisible}">
+							<DatePicker placeholder="Valid From..." change="onChangeValidateDateRange" valueFormat="yyyy-MM-dd" class="sapUiSmallMarginBottom"
+								value="{AssignmentRequest>/VALID_FROM}" visible="{AssignmentRequest>/isValidityVisible}" editable="{AssignmentRequest>/isValidFromEnabled}"/>
+							<Text width="0.2em" visible="{AssignmentRequest>/isValidityVisible}"/>
+							<Text text="to" visible="{AssignmentRequest>/isValidityVisible}"/>
+							<Text width="0.2em" visible="{AssignmentRequest>/isValidityVisible}"/>
+							<DatePicker placeholder="Valid To..." change="onChangeValidateDateRange" valueFormat="yyyy-MM-dd" class="sapUiSmallMarginBottom"
+								value="{AssignmentRequest>/VALID_TO}" visible="{AssignmentRequest>/isValidityVisible}" editable="{AssignmentRequest>/isValidToEnabled}"/>
+						</HBox>
+					</f:content>
+				</f:SimpleForm>
+				<MessageStrip id="assignmentMessageStripId"></MessageStrip>
+				<Label/>
+			</layout:content>
+		</layout:VerticalLayout>
+		<buttons>
+			<Button
+				text="{=${AppModel>/oMode}==='Edit' ? ${i18n>ApproverMatrix.AssignNew.Dialog.Update}: ${i18n>ApproverMatrix.AssignNew.Dialog.Submit}}"
+				icon="sap-icon://process" press="onPressSubmitAssignmentRequest" visible="{AssignmentRequest>/isSubmitVisible}"/>
+			<Button text="{i18n>ApproverMatrix.AssignNew.Dialog.Upload}" icon="sap-icon://upload" press="onPressMassUploadTemplate"
+				visible="{AssignmentRequest>/isMassUploadVisible}"/>
+			<Button icon="sap-icon://decline" press="closeAssignmentDialog"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
