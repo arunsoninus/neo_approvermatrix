@@ -190,16 +190,15 @@ sap.ui.define([
 		 */
 		_fnApproverMatrixFilter: function (component) {
 			component.AppModel.setProperty("/showAssignNewButton", true);
+			component.AppModel.setProperty("/showToolbarButtons", true);
 			component.AppModel.setProperty("/viewAccessOnly", true);
 			var staffInfo = component.AppModel.getProperty("/staffInfo");
 			var andFilter = [],
 				andParamFilter, orFilter = [];
 			var dFilter = component.AppModel.getProperty("/defaultMatrixFilter");
-			dFilter = Formatter._parseJsonData(dFilter);
-			var aFilter = (dFilter instanceof Array && dFilter.length > 0) ? dFilter : [];
+			var aFilter = dFilter ? [].concat(dFilter) : [];
 			var userGrp = component.AppModel.getProperty("/userGrp");
 			var isDeptAdmin = component.AppModel.getProperty("/isDeptAdmin");
-			debugger;
 
 			if (userGrp && userGrp === component.getI18n("ApproverMatrix.User.AdminGrp")) {
 				// If the Logged In User is an Admin
@@ -241,6 +240,7 @@ sap.ui.define([
 				component.AppModel.setProperty("/showAssignNewButton", false);
 			} else { //Not Assigned to Anything
 				component.AppModel.setProperty("/showAssignNewButton", false);
+				component.AppModel.setProperty("/showToolbarButtons", false);
 				component.AppModel.setProperty("/viewAccessOnly", false);
 			}
 
