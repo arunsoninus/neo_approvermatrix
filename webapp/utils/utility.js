@@ -195,11 +195,9 @@ sap.ui.define([
 			var andFilter = [],
 				andParamFilter, orFilter = [];
 			var dFilter = component.AppModel.getProperty("/defaultMatrixFilter");
-			dFilter = Formatter._parseJsonData(dFilter);
-			var aFilter = (dFilter instanceof Array && dFilter.length > 0) ? dFilter : [];
+			var aFilter = dFilter ? [].concat(dFilter) : [];
 			var userGrp = component.AppModel.getProperty("/userGrp");
 			var isDeptAdmin = component.AppModel.getProperty("/isDeptAdmin");
-			debugger;
 
 			if (userGrp && userGrp === component.getI18n("ApproverMatrix.User.AdminGrp")) {
 				// If the Logged In User is an Admin
